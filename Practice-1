@@ -1,0 +1,63 @@
+package Ders_Assertions;
+
+import io.github.bonigarcia.wdm.WebDriverManager;
+import org.junit.Assert;
+import org.junit.Before;
+import org.junit.Test;
+import org.openqa.selenium.By;
+import org.openqa.selenium.WebDriver;
+import org.openqa.selenium.WebElement;
+import org.openqa.selenium.chrome.ChromeDriver;
+import org.openqa.selenium.support.ui.Select;
+
+import java.time.Duration;
+import java.util.List;
+
+public class Ders4_DPractice {
+    WebDriver driver;
+
+    @Before
+    public void setup(){
+        WebDriverManager.chromedriver().setup();
+        driver = new ChromeDriver();
+        driver.manage().window().maximize();
+        driver.manage().timeouts().implicitlyWait(Duration.ofSeconds(15));
+        driver.get("https://www.amazon.com.tr");
+    }
+    @Test
+    public void task(){
+        WebElement cerez = driver.findElement(By.cssSelector("#sp-cc-rejectall-link"));
+        cerez.click();
+
+        List<WebElement> tumdlist = driver.findElements(By.cssSelector("#searchDropdownBox"));
+        for (WebElement w: tumdlist){
+            System.out.println(w.getText());
+        }
+
+        if (tumdlist.size()==40){
+            System.out.println("True");
+        } else{
+            System.out.println("False");
+        }
+
+        System.out.println("---------------");
+
+        WebElement dList = driver.findElement(By.cssSelector("#searchDropdownBox"));
+        dList.click();
+        Select select = new Select(dList);
+        select.selectByIndex(9);
+        System.out.println(select.getFirstSelectedOption().getText());
+
+        WebElement searchBox = driver.findElement(By.cssSelector("#twotabsearchtextbox"));
+        searchBox.sendKeys("Java");
+        searchBox.submit();
+
+        WebElement sonucText = driver.findElement(By.xpath("//*[@class='a-section a-spacing-small a-spacing-top-small']"));
+        System.out.println(sonucText.getText());
+        String actualText = sonucText.getText();
+        String expText = "Java";
+        Assert.assertTrue(actualText.contains(expText));
+
+    }
+
+}
