@@ -1,0 +1,62 @@
+package Turkcell_Portfolio;
+
+import Utilities.BeforeClassAfter;
+import com.github.javafaker.Faker;
+import org.junit.Assert;
+import org.junit.Test;
+import org.openqa.selenium.By;
+import org.openqa.selenium.JavascriptExecutor;
+import org.openqa.selenium.WebElement;
+import org.openqa.selenium.interactions.Actions;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
+import java.util.ArrayList;
+import java.util.List;
+
+public class Turkcell1 extends BeforeClassAfter {
+
+
+    @Test
+    public void task1() throws InterruptedException {
+        Faker faker = new Faker();
+        Actions action = new Actions(driver);
+
+        String turkcellhandle = driver.getWindowHandle();
+        driver.get("https://www.turkcell.com.tr");
+        driver.findElement(By.xpath("//em[@class='icon-account-regular']")).click();
+            Thread.sleep(2000);
+        driver.findElement(By.xpath("//div[@class='m-form-group']//a[@href='javascript:;']")).click();
+            driver.getWindowHandles();
+        List<String> windowList = new ArrayList<>(driver.getWindowHandles());
+        driver.switchTo().window(windowList.get(1));
+            driver.manage().window().maximize();
+        WebElement loginPage = driver.findElement(By.xpath("//*[@id='phoneNo']"));
+                String number = "5305608749";
+                loginPage.sendKeys(number);
+        driver.findElement(By.xpath("//*[@id='webLogin-button']")).click();
+                //Yeni bir kullanıcı numarası olduğunu teyit et
+        WebElement text = driver.findElement(By.xpath("//*[@class='intro']"));
+                        if (text.isDisplayed()){
+                            System.out.println("Test Passed");
+                     } else {
+                            System.out.println("Test Failed");
+                             }
+             Thread.sleep(3000);
+        driver.findElement(By.xpath("//*[@class='main-header__go-back']")).click();
+        driver.close();
+
+        driver.switchTo().window(windowList.get(0));
+
+        WebElement iletisim = driver.findElement(By.xpath("//*[@title='İletişim']"));
+        JavascriptExecutor js = (JavascriptExecutor) driver;
+        js.executeScript("arguments[0].scrollIntoView(true);", iletisim);
+        js.executeScript("arguments[0].click();", iletisim);
+
+        driver.quit();
+
+    }
+
+
+
+}
