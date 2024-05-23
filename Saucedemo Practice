@@ -1,0 +1,138 @@
+package Portfolio;
+
+import Utilities.BeforeClassAfter;
+import org.junit.Assert;
+import org.junit.Test;
+import org.openqa.selenium.*;
+import org.openqa.selenium.interactions.Actions;
+import org.openqa.selenium.support.ui.Select;
+
+
+public class saucedemo extends BeforeClassAfter {
+
+    @Test
+    public void task1() throws InterruptedException {
+
+        Actions actions = new Actions(driver);
+
+        driver.get("https://www.saucedemo.com/");
+        WebElement userBox = driver.findElement(By.xpath("//input[@id='user-name']"));
+        WebElement passBox = driver.findElement(By.xpath("//input[@id='password']"));
+
+
+        if (userBox.isDisplayed() && passBox.isDisplayed()){
+                System.out.println("Both box is enabled");
+            } else {
+                System.out.println("Both box is not enabled!!");
+            }
+
+        actions.click(userBox).sendKeys("standard_user" , Keys.TAB).sendKeys("secret_sauce").perform();
+        WebElement loginButton = driver.findElement(By.xpath("//input[@id='login-button']"));
+        loginButton.click();
+        driver.findElement(By.xpath("//span[@class='title']")).isDisplayed();
+        WebElement leftLogo = driver.findElement(By.xpath("//button[@id='react-burger-menu-btn']"));
+            Thread.sleep(2000);
+        WebElement logout = driver.findElement(By.xpath("//a[@id='logout_sidebar_link']"));
+            Thread.sleep(2000);
+        leftLogo.click();
+        logout.click();
+    }
+    @Test
+    public void task2(){
+        Actions actions = new Actions(driver);
+
+        driver.get("https://www.saucedemo.com/");
+        WebElement userBox = driver.findElement(By.xpath("//input[@id='user-name']"));
+        WebElement passBox = driver.findElement(By.xpath("//input[@id='password']"));
+
+
+        if (userBox.isDisplayed() && passBox.isDisplayed()){
+            System.out.println("Both box is enabled");
+        } else {
+            System.out.println("Both box is not enabled!!");
+        }
+
+        actions.click(userBox).sendKeys("standard_user" , Keys.TAB).sendKeys("secret-sauce").perform();
+        WebElement loginButton = driver.findElement(By.xpath("//input[@id='login-button']"));
+        loginButton.click();
+    }
+
+    @Test
+    public void task3(){
+        Actions actions = new Actions(driver);
+
+        driver.get("https://www.saucedemo.com/");
+        WebElement userBox = driver.findElement(By.xpath("//input[@id='user-name']"));
+        WebElement passBox = driver.findElement(By.xpath("//input[@id='password']"));
+
+
+        if (userBox.isDisplayed() && passBox.isDisplayed()){
+            System.out.println("Both box is enabled");
+        } else {
+            System.out.println("Both box is not enabled!!");
+        }
+
+        actions.click(userBox).sendKeys("standard_user" , Keys.TAB).sendKeys("secret@sauce").perform();
+        WebElement loginButton = driver.findElement(By.xpath("//input[@id='login-button']"));
+        loginButton.click();
+    }
+
+    @Test
+    public void task4(){
+        Actions actions = new Actions(driver);
+
+        driver.get("https://www.saucedemo.com/");
+        WebElement userBox = driver.findElement(By.xpath("//input[@id='user-name']"));
+        WebElement passBox = driver.findElement(By.xpath("//input[@id='password']"));
+
+
+        if (userBox.isDisplayed() && passBox.isDisplayed()){
+            System.out.println("Both box is enabled");
+        } else {
+            System.out.println("Both box is not enabled!!");
+        }
+
+        actions.click(userBox).sendKeys("standard_user" , Keys.TAB).sendKeys("standard_user").perform();
+        WebElement loginButton = driver.findElement(By.xpath("//input[@id='login-button']"));
+        loginButton.click();
+    }
+
+    @Test
+    public void task5() throws InterruptedException {
+        Actions actions = new Actions(driver);
+
+        driver.get("https://www.saucedemo.com/");
+        WebElement userBox = driver.findElement(By.xpath("//input[@id='user-name']"));
+        WebElement passBox = driver.findElement(By.xpath("//input[@id='password']"));
+
+
+        if (userBox.isDisplayed() && passBox.isDisplayed()){
+            System.out.println("Both box is enabled");
+        } else {
+            System.out.println("Both box is not enabled!!");
+        }
+
+        actions.click(userBox).sendKeys("standard_user" , Keys.TAB).sendKeys("secret_sauce").perform();
+        WebElement loginButton = driver.findElement(By.xpath("//input[@id='login-button']"));
+        loginButton.click();
+            Thread.sleep(2000);
+        //burada ara ara chrome "şifre uyarı alerti" çıkmakta bazen de çıkmamakta !!
+        //driver.switchTo().alert().accept();
+
+        WebElement dList = driver.findElement(By.xpath("//*[@class='product_sort_container']"));
+        Select select = new Select(dList);
+        select.selectByIndex(2);
+        int screenHeight = java.awt.Toolkit.getDefaultToolkit().getScreenSize().height;
+        driver.manage().window().setSize(new Dimension(500, screenHeight));
+        driver.manage().window().setPosition(new Point(0, 0));
+
+        WebElement price = driver.findElement(By.xpath("//div[.='$29.99']"));
+        JavascriptExecutor js = (JavascriptExecutor) driver;
+        js.executeScript("arguments[0].scrollIntoView(true);", price );
+        js.executeScript("arguments[0].click();", price );
+            String actPrice = price.getText();
+            String expPrice = "$29.99";
+        Assert.assertTrue(actPrice.contains(expPrice));
+        
+    }
+}
