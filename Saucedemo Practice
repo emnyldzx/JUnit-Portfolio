@@ -11,7 +11,7 @@ import org.openqa.selenium.support.ui.Select;
 public class saucedemo extends BeforeClassAfter {
 
     @Test
-    public void task1() throws InterruptedException {
+    public void taskTrueInfo() throws InterruptedException {
 
         Actions actions = new Actions(driver);
 
@@ -38,7 +38,7 @@ public class saucedemo extends BeforeClassAfter {
         logout.click();
     }
     @Test
-    public void task2(){
+    public void task2WrongPassword(){
         Actions actions = new Actions(driver);
 
         driver.get("https://www.saucedemo.com/");
@@ -58,7 +58,7 @@ public class saucedemo extends BeforeClassAfter {
     }
 
     @Test
-    public void task3(){
+    public void task3WeirdPassword(){
         Actions actions = new Actions(driver);
 
         driver.get("https://www.saucedemo.com/");
@@ -78,7 +78,7 @@ public class saucedemo extends BeforeClassAfter {
     }
 
     @Test
-    public void task4(){
+    public void task4WrongUsername(){
         Actions actions = new Actions(driver);
 
         driver.get("https://www.saucedemo.com/");
@@ -92,13 +92,13 @@ public class saucedemo extends BeforeClassAfter {
             System.out.println("Both box is not enabled!!");
         }
 
-        actions.click(userBox).sendKeys("standard_user" , Keys.TAB).sendKeys("standard_user").perform();
+        actions.click(userBox).sendKeys("standard_User" , Keys.TAB).sendKeys("standard_user").perform();
         WebElement loginButton = driver.findElement(By.xpath("//input[@id='login-button']"));
         loginButton.click();
     }
 
     @Test
-    public void task5() throws InterruptedException {
+    public void finalTask() throws InterruptedException {
         Actions actions = new Actions(driver);
 
         driver.get("https://www.saucedemo.com/");
@@ -133,6 +133,6 @@ public class saucedemo extends BeforeClassAfter {
             String actPrice = price.getText();
             String expPrice = "$29.99";
         Assert.assertTrue(actPrice.contains(expPrice));
-        
+
     }
 }
